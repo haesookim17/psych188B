@@ -32,11 +32,16 @@ def load_haxby_data(datapath, sub, mask=None):
     return maskeddata, fmrilabel[fmrilabel.chunks != 11]  # not loading the testing run that we've set aside
 
 # Setup working directory & load files
-cwd = os.getcwd()+'/haxby2001-188B'
-files = os.listdir(cwd)
-data = np.array([])
-for f in files:
+cwd      = os.getcwd()+'/haxby2001-188B'
+files    = os.listdir(cwd)  # create a list of the files in 'haxby2001-188B'
+subjects = ([])             # initialize subjects array
+for f in files:		# load subject mask4_vt files into subjects array
 	if f.startswith('subj'):
-		data = np.array([data, [load_haxby_data(cwd, f, 'mask4_vt')]])
+        features = np.array([])
+        labels   = np.array([])
+        features, labels = load_haxby_data(cwd, f, 'mask4_vt')
+        data = np.hstack((labels, features))
+        subjects = np.append(subjects, data)
+
 
 
