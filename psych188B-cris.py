@@ -31,17 +31,19 @@ def load_haxby_data(datapath, sub, mask=None):
 
     return maskeddata, fmrilabel[fmrilabel.chunks != 11]  # not loading the testing run that we've set aside
 
-# Setup working directory & load files
-cwd      = os.getcwd()+'/haxby2001-188B'
-files    = os.listdir(cwd)  # create a list of the files in 'haxby2001-188B'
-subjects = ([])             # initialize subjects array
-for f in files:		# load subject mask4_vt files into subjects array
-	if f.startswith('subj'):
-        features = np.array([])
-        labels   = np.array([])
-        features, labels = load_haxby_data(cwd, f, 'mask4_vt')
-        data = np.hstack((labels, features))
-        subjects = np.append(subjects, data)
+### Setup working directory & load files
+# the code below assumes that the folder 'haxby2001-188B' is located in your current directory
+cwd = os.getcwd()+'/haxby2001-188B'
 
+# Cruddy way of doing this, should condense this code
+# This will load up the data into sub1, sub2, ..., sub5 with labels and features in a matrix
+# then it will print out the dimensions to confirm that they are correct
+features = np.array([]); labels   = np.array([])
+features, labels = load_haxby_data(cwd, 'subj1', 'mask4_vt'); sub1 = np.hstack((labels, features))
+features, labels = load_haxby_data(cwd, 'subj2', 'mask4_vt'); sub2 = np.hstack((labels, features))
+features, labels = load_haxby_data(cwd, 'subj3', 'mask4_vt'); sub3 = np.hstack((labels, features))
+features, labels = load_haxby_data(cwd, 'subj4', 'mask4_vt'); sub4 = np.hstack((labels, features))
+features, labels = load_haxby_data(cwd, 'subj5', 'mask4_vt'); sub5 = np.hstack((labels, features))
+print "Subject 1:", sub1.shape, "\nSubject 2:", sub2.shape, "\nSubject 3:", sub3.shape, "\nSubject 4:", sub4.shape, "\nSubject 5:", sub5.shape
 
 
