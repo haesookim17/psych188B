@@ -1,8 +1,7 @@
-# OKAY STILL A WORK IN PROGRESS, WILL WORK ON IT MORE WHEN I GET HOME
-
+# divde_data for a single subject
 import numpy as np
 
-#create category matrices
+#create empty category lists
 faces = []
 cats = []
 bottles = []
@@ -44,29 +43,38 @@ def divide_data(array):
 		chairs.append(array)
 	elif row[0] == 'scramblepix':
 		controls.append(array)
-	elif row[0] == 'rest':
-		rests.append(array)
 	return
 
 #create a list just to iterate through
 chunks = [chunk_0,chunk_1,chunk_2,chunk_3,chunk_4,chunk_5,chunk_6,chunk_7,chunk_8,chunk_9,chunk_10]
 
-#for each chunk, check the 1st index of each row and create subsets based on the label
 for chunk in chunks:
-    faces_,i = chunk[chunk[:,0]=='face']
 
+	#for each chunk, check the 1st index of each row and create subsets based on the label
+    faces = chunk[chunk[:,0]=='face']
+    cats = chunk[chunk[:,0]=='cat']
+    bottles = chunk[chunk[:,0]=='bottle']
+    shoes = chunk[chunk[:,0]=='shoe']
+    scissors = chunk[chunk[:,0]=='scissor']
+    houses = chunk[chunk[:,0]=='house']
+    chairs = chunk[chunk[:,0]=='chair']
+    controls = chunk[chunk[:,0]=='scramblepix']
+	
+	#create a list to iterate through
+	lists = [faces,cats,bottles,shoes,scissors,houses,chairs,controls]
+	
+	for list in lists:
+    	#transform each matrix into a numpy array
+    	list = np.array(list)
+    	#average each numpy matrix into a single row
+    	list = np.mean(list, axis=0)
+		
+	#add to big matrix holding averaged trials from each chunk
+	
+		
 #read through each row in each chunk and add to appropro matrix
 for chunk in chunks:
     np.apply_along_axis(divide_data, axis=1, arr=chunk)
-
-#create a list to iterate through
-lists = [faces,cats,bottles,shoes,scissors,houses,chairs,controls,rests]
-
-for list in lists:
-    #transform each matrix into a numpy array
-    list = np.array(list)
-    #average each numpy matrix into a single row
-    list = np.mean(list, axis=0)
 
 #now we have 8 numpy arrays, each representing one trial for the subject. put together into one matrix
 np.concatenate((faces,cats,bottles,shoes,scissors,houses,chairs,controls), axis=0)
