@@ -1,80 +1,52 @@
 # divde_data for a single subject
-import numpy as np
 
-#create empty category lists
-faces = []
-cats = []
-bottles = []
-shoes = []
-scissors = []
-houses = []
-chairs = []
-controls = []
-rests = []
-
-#check the second index of each row and create subsets based on the chunk numbers there
-chunk_0 = sub1[sub1[:,1] == 0]
-chunk_1 = sub1[sub1[:,1] == 1]
-chunk_2 = sub1[sub1[:,1] == 2]
-chunk_3 = sub1[sub1[:,1] == 3]
-chunk_4 = sub1[sub1[:,1] == 4]
-chunk_5 = sub1[sub1[:,1] == 5]
-chunk_6 = sub1[sub1[:,1] == 6]
-chunk_7 = sub1[sub1[:,1] == 7]
-chunk_8 = sub1[sub1[:,1] == 8]
-chunk_9 = sub1[sub1[:,1] == 9]
-chunk_10 = sub1[sub1[:,1] == 10]
-
-#divide_data checks the first index of each new array and adds the array to the appropriate category matrix
-def divide_data(array):
-	if row[0] == 'face':
-		faces.append(array)
-	elif row[0] == 'cat':
-		cats.append(array)
-	elif row[0] == 'bottle':
-		bottles.append(array)
-	elif row[0] == 'shoe':
-		shoes.append(array)
-	elif row[0] == 'scissor':
-		scissors.append(array)
-	elif row[0] == 'house':
-		houses.append(array)
-	elif row[0] == 'chair':
-		chairs.append(array)
-	elif row[0] == 'scramblepix':
-		controls.append(array)
-	return
-
-#create a list just to iterate through
-chunks = [chunk_0,chunk_1,chunk_2,chunk_3,chunk_4,chunk_5,chunk_6,chunk_7,chunk_8,chunk_9,chunk_10]
-
-for chunk in chunks:
-
-	#for each chunk, check the 1st index of each row and create subsets based on the label
-    faces = chunk[chunk[:,0]=='face']
-    cats = chunk[chunk[:,0]=='cat']
-    bottles = chunk[chunk[:,0]=='bottle']
-    shoes = chunk[chunk[:,0]=='shoe']
-    scissors = chunk[chunk[:,0]=='scissor']
-    houses = chunk[chunk[:,0]=='house']
-    chairs = chunk[chunk[:,0]=='chair']
-    controls = chunk[chunk[:,0]=='scramblepix']
+def divide_data(subject):
+	#input parameter is the data of one subject
 	
-	#create a list to iterate through
-	lists = [faces,cats,bottles,shoes,scissors,houses,chairs,controls]
+	#output parameter is the cleaned matrix for the subject
+	big_mat = []
 	
-	for list in lists:
-    	#transform each matrix into a numpy array
-    	list = np.array(list)
-    	#average each numpy matrix into a single row
-    	list = np.mean(list, axis=0)
+	import numpy as np
+
+	#create a list just to iterate through
+	chunks = [0,1,2,3,4,5,6,7,8,9,10]
+	
+	for chunk in chunks:
+		#pull out chunk based on the chunk number there
+		current_chunk = split2chunk(subject['labels'],subject['features'],chunk)
+	
+		#create a list to iterate through
+		labels = ['faces','cats','bottles','shoes','scissors','houses','chairs','scramblepix']
+
 		
-	#add to big matrix holding averaged trials from each chunk
+    	faces = chunk[chunk[:,0]=='face']
+    	cats = chunk[chunk[:,0]=='cat']
+    	bottles = chunk[chunk[:,0]=='bottle']
+    	shoes = chunk[chunk[:,0]=='shoe']
+    	scissors = chunk[chunk[:,0]=='scissor']
+    	houses = chunk[chunk[:,0]=='house']
+    	chairs = chunk[chunk[:,0]=='chair']
+    	controls = chunk[chunk[:,0]=='scramblepix']
 	
 		
-#read through each row in each chunk and add to appropro matrix
-for chunk in chunks:
-    np.apply_along_axis(divide_data, axis=1, arr=chunk)
-
-#now we have 8 numpy arrays, each representing one trial for the subject. put together into one matrix
-np.concatenate((faces,cats,bottles,shoes,scissors,houses,chairs,controls), axis=0)
+	
+		for label in lists:
+			#for each chunk, pull out subset based on the label
+			current_label = split2chunk(subject['labels'],subject['features'],label)
+    		
+			#transform each category matrix into a numpy array
+    		current_label = np.array(current_label)
+		
+    		#average each numpy array into a single row
+    		current_label = np.mean(current_label, axis=0)
+			
+			#add to big matrix holding averaged trials for each label from each chunk
+			big_mat.append(current_label)
+		
+	#subtract the averaged rest values from every trial
+	avg_rest = get_rest(subject
+	
+	big_mat =np.array(big_mat)
+	
+	return big_mat
+	
