@@ -9,45 +9,58 @@ scissors = []
 houses = []
 chairs = []
 controls = []
+rests = []
 
 #divide_data checks the first index of each new array and adds the array to the appropriate category matrix
 def divide_data(array):
-	if row[0] == 'face'
+	if row[0] == 'face':
 		faces.append(array)
-	if else row[0] == 'cat'
+	elif row[0] == 'cat':
 		cats.append(array)
-		.
-		.
-		.
-		.
-		.
-		.
+	elif row[0] == 'bottle':
+		bottles.append(array)
+	elif row[0] == 'shoe':
+		shoes.append(array)
+	elif row[0] == 'scissor':
+		scissors.append(array)
+	elif row[0] == 'house':
+		houses.append(array)
+	elif row[0] == 'chair':
+		chairs.append(array)
+	elif row[0] == 'scramblepix':
+		controls.append(array)
+	elif row[0] == 'rest':
+		rests.append(array)
 	return
 
 #read through each row in 'sub1' and add to appropro matrix
 np.apply_along_axis(divide_data, axis=1, arr=sub1)
+np.apply_along_axis(divide_data, axis=1, arr=sub2)
+np.apply_along_axis(divide_data, axis=1, arr=sub3)
+np.apply_along_axis(divide_data, axis=1, arr=sub4)
+np.apply_along_axis(divide_data, axis=1, arr=sub5)
 
 #transform each matrix into a numpy array
 faces = np.array(faces)
-.
-.
-.
-.
-.
-.
-.
+faces = np.array(cats)
+faces = np.array(bottles)
+faces = np.array(shoes)
+faces = np.array(scissors)
+faces = np.array(houses)
+faces = np.array(chairs)
+faces = np.array(controls)
+faces = np.array(rests)
 
 #average each numpy matrix into a single row
 faces = np.mean(faces, axis=0)
-.
-.
-.
-.
-.
-.
-.
+faces = np.mean(cats, axis=0)
+faces = np.mean(bottles, axis=0)
+faces = np.mean(shoes, axis=0)
+faces = np.mean(scissors, axis=0)
+faces = np.mean(houses, axis=0)
+faces = np.mean(chairs, axis=0)
+faces = np.mean(controls, axis=0)
+faces = np.mean(rests, axis=0)
 
 #now we have 8 numpy arrays, each representing one trial for the subject. put together into one matrix
-np.concatenate((faces,.......), axis=0)
-
-       
+np.concatenate((faces,cats,bottles,shoes,scissors,houses,chairs,controls), axis=0)
