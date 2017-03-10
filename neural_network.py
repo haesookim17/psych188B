@@ -1,12 +1,12 @@
 #PREPROCESS BEFORE THIS
 #INSTALL AND CONFIGURE KERAS BEFORE THIS
 
-####################################################################################
+################################################################################################
 #
 # (thanks Jeff)                                                                    
-# This neural_network function takes in our cleaned data set and runs a neural network model on it    
+# This neural_network function takes in our cleaned data and runs a neural network model on it    
 #
-####################################################################################
+###############################################################################################
 
 def neural_network(labels,features):
   # @ param labels takes in the labels of one subject's cleaned data set
