@@ -12,6 +12,8 @@ def SVM_rbf_kernel(labels, features):
   from sklearn.svm import SVC
   from sklearn.grid_search import GridSearchCV
   from sklearn.cross_validation import StratifiedKFold
+  import sklearn.cross_validation as cv
+  import sklearn.pipeline as pp
   
   #split into training and testing set
   from sklearn.model_selection import train_test_split
