@@ -40,12 +40,6 @@ def SVM_rbf_kernel(labels, features):
   # Create our svm model with rbf kernels using our optimal params
   svc_rbf = SVC(**grid.best_params_, kernel="rbf")
   svc_rbf.fit(X_train, y_train)
-
-  # Turn it into a pipeline if we want?
-  svc_rbf_model = pp.make_pipeline(preprocessor, SVC(**grid.best_params_, kernel="rbf"))
-
-  # Fit our pipelined SVM model if we want?
-  svc_rbf_model.fit(X_train, y_train)
   y_pred_svc = svc_rbf_model.decision_function(test_X)
   score1 = svc_rbf_model.score(test_X, test_y)
   print("The SVC model with RBF kernals has an accuracy score of:", score1)
